@@ -48,5 +48,9 @@ func respondWithJSON(w http.ResponseWriter, StatusCode int, data interface{}) {
 }
 
 func StaticHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./web/static/index.html")
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+	http.ServeFile(w, r, "web/static/index.html")
 }

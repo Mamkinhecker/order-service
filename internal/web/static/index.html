@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Information</title>
+        <style>
+            * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { display: flex; flex-direction: column; gap: 20px; }
+        .search-box { display: flex; gap: 10px; }
+        input[type="text"] { flex: 1; padding: 10px; font-size: 16px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { border: 1px solid #ddd; padding: 20px; border-radius: 5px; background: #f9f9f9; }
+        .section { margin-bottom: 20px; }
+        .section-title { font-weight: bold; margin-bottom: 10px; color: #333; }
+        .error { color: red; }
+        pre { white-space: pre-wrap; word-break: break-all; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Order Information Lookup</h1>
+            <div class="search-box">
+                <input type="text" id="orderId" placeholder="Enter Order UID">
+                <button onclick="loadOrder()">Search</button>
+            </div>
+            <div id="result"></div>
+        </div>
+        <script>
+        async function loadOrder() {
+            const orderId = document.getElementById('orderId').value.trim();
+            if (!orderId) {
+                showError('Please enter Order UID');
+                return;
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<div>Loading...</div>';
+
+            try {
+                const response = await fetch(`/order/${orderId}`);
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} ${response.statusText}`);
+                }
+                
+                const order = await response.json();
+                displayOrder(order);
+            } catch (error) {
+                showError(`Failed to load order: ${error.message}`);
+            }
+        }
+
+        function displayOrder(order) {
+            const resultDiv = document.getElementById('result');
+            let html = `
+                <div class="section">
+                    <div class="section-title">Order Information</div>
+                    <div><strong>UID:</strong> ${order.order_uid}</div>
+                    <div><strong>Track Number:</strong> ${order.track_number}</div>
+                    <div><strong>Date Created:</strong> ${order.date_created}</div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Delivery</div>
+                    <div><strong>Name:</strong> ${order.delivery.name}</div>
+                    <div><strong>Address:</strong> ${order.delivery.address}, ${order.delivery.city}</div>
+                    <div><strong>Phone:</strong> ${order.delivery.phone}</div>
+                    <div><strong>Email:</strong> ${order.delivery.email}</div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Payment</div>
+                    <div><strong>Amount:</strong> ${order.payment.amount} ${order.payment.currency}</div>
+                    <div><strong>Provider:</strong> ${order.payment.provider}</div>
+                    <div><strong>Transaction:</strong> ${order.payment.transaction}</div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Items (${order.items.length})</div>
+                    <ul>
+                `;
+
+               order.items.forEach(item => {
+                   html += `<li>${item.name} - ${item.price} ${order.payment.currency} (x${item.sale}%)</li>`;
+               });
+
+               html += `
+                      </ul>
+                    </div>
+                
+                    <div class="section">
+                        <div class="section-title">Raw JSON</div>
+                        <pre>${JSON.stringify(order, null, 2)}</pre>
+                    </div>
+                `;
+
+                resultDiv.innerHTML = html;
+            }
+
+            function showError(message) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<div class="error">${message}</div>`;
+            }
+        </script>
+    </body>
+</html>

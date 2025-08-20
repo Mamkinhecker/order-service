@@ -29,6 +29,15 @@ func (c *Cache) Get(uid string) (*db.Order, bool) {
 	return order, exists
 }
 
+func (c *Cache) Restore(orders []db.Order) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	for i := range orders {
+		order := orders[i] // Создаем копию для безопасного использования указателя
+		c.items[order.OrderUID] = &order
+	}
+}
+
 func (c *Cache) GetAll() map[string]*db.Order {
 	c.mu.RLock()
 	defer c.mu.RUnlock()

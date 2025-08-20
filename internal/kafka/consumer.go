@@ -32,7 +32,7 @@ func NewConsumer(cfg *config.Config, db *db.Database, cache *cache.Cache) *Consu
 		cache: cache}
 }
 
-func (c *Consumer) start() {
+func (c *Consumer) Start() {
 	go c.ConsumeMessages()
 }
 

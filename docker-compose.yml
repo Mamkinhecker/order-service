@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   postgres:
@@ -30,7 +30,7 @@ services:
       - --smp
       - '1'
       - --memory
-      - 2G
+      - 1G
       - --reserve-memory
       - 0M
       - --overprovisioned
@@ -61,13 +61,14 @@ services:
       KAFKA_BROKERS: redpanda:9092
       HTTP_PORT: 8080
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
-      - postgres
-      - redpanda
+      postgres:
+        condition: service_healthy
+      redpanda:
+        condition: service_healthy
     networks:
       - order-service-network
-
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -76,7 +77,7 @@ services:
       redpanda:
         condition: service_healthy
     ports:
-      - "8081:8080"
+      - "8082:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: redpanda:9092

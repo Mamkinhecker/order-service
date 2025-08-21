@@ -8,6 +8,7 @@ import (
 	"order-service/internal/db"
 	"order-service/internal/handlers"
 	"order-service/internal/kafka"
+	"order-service/test"
 	"os"
 	"os/signal"
 	"syscall"
@@ -22,7 +23,7 @@ func main() {
 	}
 	defer database.Close()
 
-	exists, err := database.OrderExists("b563feb7b2b84b6test")
+	/*exists, err := database.OrderExists("b563feb7b2b84b6test")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,7 +36,7 @@ func main() {
 		log.Println("Test data loaded successfully")
 	} else {
 		log.Println("Test data already exists")
-	}
+	}*/
 
 	c := cache.NewCache()
 	orders, err := database.GetAllOrders()
@@ -48,6 +49,7 @@ func main() {
 
 	consumer := kafka.NewConsumer(cfg, database, c)
 	consumer.Start()
+	test.Test()
 	defer consumer.Close()
 
 	orderHandler := handlers.NewOrderHandler(c, database)

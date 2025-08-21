@@ -1,3 +1,14 @@
+
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'user') THEN
+        CREATE USER user WITH PASSWORD 'password';
+    END IF;
+END
+$$;
+
+GRANT ALL PRIVILEGES ON DATABASE orders_db TO user;
+
 CREATE TABLE IF NOT EXISTS orders (
     order_uid VARCHAR(255) PRIMARY KEY,
     track_number VARCHAR(255) NOT NULL,
@@ -11,6 +22,8 @@ CREATE TABLE IF NOT EXISTS orders (
     date_created TIMESTAMP WITH TIME ZONE NOT NULL,
     oof_shard VARCHAR(10) NOT NULL
 );
+
+GRANT ALL PRIVILEGES ON TABLE orders TO user;
 
 CREATE TABLE IF NOT EXISTS deliveries (
     order_uid VARCHAR(255) PRIMARY KEY REFERENCES orders(order_uid) ON DELETE CASCADE,

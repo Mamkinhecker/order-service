@@ -10,43 +10,51 @@ Order Service
 HTTP API для получения информации о заказах
 Веб-интерфейс для просмотра заказов
 
-order-service/
-├── cmd/
-│   └── app/
-│       └── main.go
-├── config/
-│   └── config.go
-├── internal/
-│   ├── cache/
-│   │   └── cache.go
-│   ├── db/
-│   │   ├── database.go
-│   │   └── models.go
-│   ├── handlers/
-│   │   └── handlers.go
-│   ├── kafka/
-│   │   └── consumer.go
-├── migrations/
-│   └── init.sql
-├── test/
-│   └── kafka-test.go
-├── web/static/
-│   └── index.html
-├── .dockerignore
-├── docker-compose.yml
-├── dockerfile
-├── go.mod
-├── go.sum
-├── model.json
-└── README.md
+
+
+	order-service/
+	├── cmd/
+	│   └── app/
+	│       └── main.go
+	├── config/
+	│   └── config.go
+	├── internal/
+	│   ├── cache/
+	│   │   └── cache.go
+	│   ├── db/
+	│   │   ├── database.go
+	│   │   └── models.go
+	│   ├── handlers/
+	│   │   └── handlers.go
+	│   └── kafka/
+	│       └── consumer.go
+	├── migrations/
+	│   └── init.sql
+	├── test/
+	│   └── kafka-test.go
+	├── web/static/
+	│   └── index.html
+	├── .dockerignore
+	├── docker-compose.yml
+	├── dockerfile
+	├── go.mod
+	├── go.sum
+	├── model.json
+	└── README.md
+
+
 
 Быстрый запуск с Docker
 
 Клонируйте репозиторий:
-    git clone https://github.com/Mamkinhecker/order-service.git
-    cd order-service
+
+
+	git clone https://github.com/Mamkinhecker/order-service.git
+
+
 Запустите сервисы с помощью Docker Compose:
-    docker-compose up -d --build
+
+	docker-compose up -d --build
 
 Формат сообщений Kafka
 
@@ -54,16 +62,16 @@ order-service/
 
 Docker контейнеризация
 
-Проект включает Dockerfile и docker-compose.yml для простого развертывания:
 
-Dockerfile: Сборка Go приложения
-docker-compose.yml: Оркестрация сервисов (приложение, PostgreSQL, Redpanda)
+Проект включает Dockerfile и docker-compose.yml для простого развертывания:
+ * Dockerfile: Сборка Go приложения
+ * docker-compose.yml: Оркестрация сервисов (приложение, PostgreSQL, Redpanda)
 
 Мониторинг
 
 Приложение логирует ключевые события:
 
-Подключение к базе данных
-Сохранение заказов
-Обработка сообщений Kafka
-HTTP запросы
+ * Подключение к базе данных
+ * Сохранение заказов
+ * Обработка сообщений Kafka
+ * HTTP запросы

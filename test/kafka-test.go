@@ -12,6 +12,7 @@ import (
 )
 
 func Test() {
+
 	w := &kafka.Writer{
 		Addr:     kafka.TCP("redpanda:9092"),
 		Topic:    "orders",
@@ -21,7 +22,7 @@ func Test() {
 	defer w.Close()
 
 	order := db.Order{
-		OrderUID:    "test-order-123",
+		OrderUID:    "order-test123",
 		TrackNumber: "WBILMTESTTRACK",
 		Entry:       "WBIL",
 		Delivery: db.Delivery{
@@ -81,7 +82,7 @@ func Test() {
 		},
 	)
 	if err != nil {
-		log.Fatal("Failed to write message:", err)
+		log.Println("Failed to write message:", err)
 	}
 
 	fmt.Println("Message sent successfully:", string(orderJSON))

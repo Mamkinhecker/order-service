@@ -23,7 +23,7 @@ func Load() *Config {
 		DBUser:       getEnv("DB_USER", "user"),
 		DBPassword:   getEnv("DB_PASSWORD", "password"),
 		DBName:       getEnv("DB_NAME", "orders_db"),
-		KafkaBrokers: strings.Split(getEnv("KAFKA_BROKERS", "localhost:9092"), ","),
+		KafkaBrokers: strings.Split(getEnv("KAFKA_BROKERS", "redpanda:9092"), ","),
 		KafkaTopic:   getEnv("KAFKA_TOPIC", "orders"),
 		HTTPPort:     getEnv("HTTP_PORT", "8080"),
 	}

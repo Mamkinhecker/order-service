@@ -36,7 +36,6 @@ func (o *Order) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	// Парсим время из строки
 	parsedTime, err := time.Parse(time.RFC3339, aux.DateCreated)
 	if err != nil {
 		return fmt.Errorf("failed to parse date_created: %w", err)

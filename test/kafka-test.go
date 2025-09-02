@@ -22,7 +22,7 @@ func Test() {
 	defer w.Close()
 
 	order := db.Order{
-		OrderUID:    "order-test123",
+		OrderUID:    "my_kafka_test",
 		TrackNumber: "WBILMTESTTRACK",
 		Entry:       "WBIL",
 		Delivery: db.Delivery{

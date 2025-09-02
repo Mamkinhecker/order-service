@@ -27,12 +27,12 @@ func main() {
 	}
 	defer database.Close()
 
-	/*exists, err := database.OrderExists("b563feb7b2b84b6test")
+	exists, err := database.OrderExists("b563feb7b2b84b6test")
 	if err != nil {
 		log.Fatal(err)
-	}*/
+	}
 
-	/*if !exists {
+	if !exists {
 		// Загрузка тестовых данных
 		if err := database.LoadTestData(); err != nil {
 			log.Fatal(err)
@@ -40,7 +40,7 @@ func main() {
 		log.Println("Test data loaded successfully")
 	} else {
 		log.Println("Test data already exists")
-	}*/
+	}
 
 	c := cache.NewCache()
 	orders, err := database.GetAllOrders()

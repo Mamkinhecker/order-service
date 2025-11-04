@@ -4,11 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/segmentio/kafka-go"
 	"log"
 	"order-service/internal/db"
 	"time"
-
-	"github.com/segmentio/kafka-go"
 )
 
 func Test() {

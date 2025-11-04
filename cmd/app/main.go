@@ -9,10 +9,6 @@ import (
 	"order-service/internal/handlers"
 	"order-service/internal/kafka"
 	"order-service/test"
-
-	//"order-service/test"
-
-	//"order-service/test"
 	"os"
 	"os/signal"
 	"syscall"

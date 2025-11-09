@@ -14,7 +14,9 @@ HTTP API для получения информации о заказах
 
 	order-service/
 	├── cmd/
-	│   └── app/
+	│   ├── app/
+	│   │   └── main.go
+	│   └── order-generator/
 	│       └── main.go
 	├── config/
 	│   └── config.go
@@ -36,9 +38,11 @@ HTTP API для получения информации о заказах
 	│   └── index.html
 	├── .dockerignore
 	├── docker-compose.yml
-	├── dockerfile
+	├── Dockerfile
+	├── Dockerfile.generator
 	├── go.mod
 	├── go.sum
+	├── .env.example
 	├── model.json
 	└── README.md
 

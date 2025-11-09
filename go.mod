@@ -3,9 +3,9 @@ module order-service
 go 1.24
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/lib/pq v1.10.9
 	github.com/segmentio/kafka-go v0.4.49
-	github.com/brianvoe/gofakeit/v6 v6.28.0
 )
 
 require (

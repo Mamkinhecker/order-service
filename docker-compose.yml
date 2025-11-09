@@ -84,6 +84,21 @@ services:
     networks:
       - order-service-network
 
+  order-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile.generator
+    container_name: order-service-generator
+    environment:
+      KAFKA_BROKERS: redpanda:9092
+      ORDERS_TOPIC: orders
+      GENERATION_INTERVAL: 10s
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    networks:
+      - order-service-network
+
 volumes:
   postgres_data:
     driver: local

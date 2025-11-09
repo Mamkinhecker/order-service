@@ -29,7 +29,6 @@ func main() {
 	}
 
 	if !exists {
-		// Загрузка тестовых данных
 		if err := database.LoadTestData(); err != nil {
 			log.Fatal(err)
 		}

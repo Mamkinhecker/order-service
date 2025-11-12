@@ -28,8 +28,10 @@ HTTP API для получения информации о заказах
 	│   │   └── models.go
 	│   ├── handlers/
 	│   │   └── handlers.go
-	│   └── kafka/
-	│       └── consumer.go
+	│   ├── kafka/
+	│   │    └── consumer.go
+	│ 	└── validation/
+	│       └── validator.go
 	├── migrations/
 	│   └── init.sql
 	├── test/

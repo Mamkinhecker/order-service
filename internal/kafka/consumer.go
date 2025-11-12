@@ -7,6 +7,7 @@ import (
 	"order-service/config"
 	"order-service/internal/cache"
 	"order-service/internal/db"
+	"order-service/internal/validation"
 	"time"
 
 	"github.com/segmentio/kafka-go"
@@ -52,11 +53,17 @@ func (c *Consumer) ConsumeMessages() {
 			continue
 		}
 
-		if err := c.db.SaveOrder(&order); err != nil {
-			log.Printf("Failed to save order to DB: %v", err)
+		if err := validation.ValidateOrder(&order); err != nil {
+			log.Printf("Validation failed: %v", err)
+			return
 		} else {
-			c.cache.Set(&order)
-			log.Printf("Order %s saved and cached", order.OrderUID)
+			log.Printf("validation successfully!")
+			if err := c.db.SaveOrder(&order); err != nil {
+				log.Printf("Failed to save order to DB: %v", err)
+			} else {
+				c.cache.Set(&order)
+				log.Printf("Order %s saved and cached", order.OrderUID)
+			}
 		}
 
 		if err := c.reader.CommitMessages(context.Background(), msg); err != nil {
